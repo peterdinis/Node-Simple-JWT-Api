@@ -25,7 +25,7 @@ mongoose.connect(
     () => {
         console.log(chalk.green.inverse("Connect to mongo"));
     }
-)
+);
 
 app.listen(process.env.PORT, () => {
     console.log(chalk.blue.inverse("Applikácia beží na porte 5500"));
