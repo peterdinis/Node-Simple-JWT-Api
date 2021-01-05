@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const chalk = require('chalk');
 const homeRoutes = require('./routes/homeRoutes');
 const authRoutes = require('./routes/authRoutes');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config()
 
@@ -13,7 +15,8 @@ app.use(helmet());
 app.use(morgan('tiny'));
 app.use(homeRoutes);
 app.use(authRoutes);
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 // mongodb setup
 mongoose.connect(
