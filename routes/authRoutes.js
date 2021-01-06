@@ -7,8 +7,8 @@ let jsonParser = bodyParser.json();
 
 /* router.get('/register', authController.getRegister);
 router.get('/login', authController.getLogin); */
+router.get('/logout', jsonParser, authController.getLogout);
 router.post('/register', jsonParser, authController.postRegister);
 router.post('/login', jsonParser, authController.postLogin);
-router.post('/logout', jsonParser, authController.postLogout);
 
 module.exports = router;
