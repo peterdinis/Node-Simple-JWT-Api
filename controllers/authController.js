@@ -1,7 +1,7 @@
 const User = require('../model/User');
 const {registerValidation} = require("../middlewares/validation");
 const bcrypt = require('bcryptjs');
-const {checkDuplicate} = require('../helpers/duplicates');
+const jwt = require('jsonwebtoken');
 
 /* exports.getLogin = (req, res) => {
     res.send('OK');
@@ -15,7 +15,21 @@ exports.postRegister = async (req, res) =>{
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-   checkDuplicate();
+    const emailExists = await User.findOne({
+        email: req.body.email
+    })
+
+    const nameExists = await User.findOne({
+        name: req.body.name
+    });
+
+    if(emailExists) {
+        return res.status(400).send("Email already exist");
+    }
+
+    if(nameExists) {
+        return res.status(400).send('Name already exist');
+    }
 
     // hashed password
     const salt = await bcrypt.genSalt(10);
@@ -34,11 +48,26 @@ exports.postRegister = async (req, res) =>{
     });
 }
 
-exports.postLogin = (req, res) => {
+exports.postLogin = async (req, res) => {
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    checkDuplicate(); // check for email
+    // check if user exists
+    const user = await User.findOne({email: req.body.email});
+    if(!user) return res.status(400).send('Email or password is wrong');
+    
+    const validPass = await bcrypt.compare(req.body.password, user.password);
+    if(!validPass) return res.status(400).send("Invalid Password");
+
+    // create and assign token
+    const token = jwt.sign({_id: user._id}, process.env.SECRET);
+    // add to header
+    res.header('token', token);
+    res.send(token);
+}
+
+
+exports.postLogout = async (req, res) => {
     
 }
 
