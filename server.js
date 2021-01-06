@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const chalk = require('chalk');
 const homeRoutes = require('./routes/homeRoutes');
 const authRoutes = require('./routes/authRoutes');
+const bookRoutes = require('./routes/booksRoutes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
