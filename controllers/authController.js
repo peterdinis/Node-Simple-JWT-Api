@@ -11,6 +11,10 @@ exports.getRegister = (req, res) =>{
     res.send('OK');
 } */
 
+/* exports.getLogout = (req, res) =>{
+    res.send('OK');
+} */
+
 exports.postRegister = async (req, res) =>{
     const {error} = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -66,8 +70,9 @@ exports.postLogin = async (req, res) => {
     res.send(token);
 }
 
-
-exports.postLogout = async (req, res) => {
-    
+exports.getLogout =  (req, res) => {
+    req.user.deleteToken(req.token, (err, user) => {
+        if(err) return res.status(400).send(err);
+        res.sendStatus(200);
+    });
 }
-
