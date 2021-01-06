@@ -9,5 +9,6 @@ let jsonParser = bodyParser.json();
 router.get('/login', authController.getLogin); */
 router.post('/register', jsonParser, authController.postRegister);
 router.post('/login', jsonParser, authController.postLogin);
+router.post('/logout', jsonParser, authController.postLogout);
 
 module.exports = router;
