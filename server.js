@@ -17,9 +17,11 @@ app.use(helmet());
 app.use(morgan('tiny'));
 app.use(homeRoutes);
 app.use(authRoutes);
+app.use(bookRoutes);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 app.use(cookieParser());
+
 
 // mongodb setup
 mongoose.connect(
@@ -32,4 +34,6 @@ mongoose.connect(
 
 app.listen(process.env.PORT, () => {
     console.log(chalk.blue.inverse("Applikácia beží na porte 5500"));
-})
+});
+
+// https://www.youtube.com/watch?v=I4BZQr-5mBY for testing

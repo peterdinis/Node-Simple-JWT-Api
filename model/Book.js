@@ -29,6 +29,11 @@ const bookSchema = new mongoose.Schema({
     publishedPhone: {
         type: Number,
         required: true
+    },
+
+    publishedDate: {
+        type: Date,
+        default: Date.now()
     }
 });
 
