@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 // create auth functions for procted routes
 
-function authUser(req, res, next){
+function authUser(req, res){
     const token = req.header('auth-token');
     if(!token) return res.status(401).send('Access denied');
 
